@@ -1,11 +1,19 @@
-import React,{useState} from "react";
+import React,{ useState } from "react";
 import "./weather.css"
+import axios from "axios"
 
 export default function Weather(){
-  const apiKey ="0f8bc384a7c31b717a18cfe38a95ae06";
-  let city="Lagos"
-  let apiUrl=`http://api.openweathermap.org/data/2.5/weather?q=${city}appid=${apiKey}&units=metric`;
- return <div className="weather">
+const [ready, setReady]=useState(false);
+const[temperature,setTemperature]=useState(null);
+function handleResponse(response) {
+  console.log(response.data);
+  setTemperature(response.data.main.temp);
+
+  setReady(true);
+}
+if(ready){
+return( 
+<div className="weather">
   <form>
   <div className="row">
   <div className="col-9">
@@ -27,14 +35,12 @@ export default function Weather(){
    </ul>
   <div className="row mt-3">
    <div className="col-6">
-    
+    <div className="clearfix">
     <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="Clear"
     />
-    
-    <span className="temperature">29</span>
+    <span className="temperature">{Math.round(temperature)}</span>
     <span className="unit">℃</span>
-    
-    
+    </div>
    </div>
    <div className="col-6">
     <ul>
@@ -44,5 +50,18 @@ export default function Weather(){
     </ul>
    </div>
   </div>
-</div>;
+</div>);
+}
+else{
+
+  const apiKey ="0f8bc384a7c31b717a18cfe38a95ae06";
+  let city="Lagos"
+  let apiUrl=`http://api.openweathermap.org/data/2.5/weather?q=${city}appid=${apiKey}&units=metric`;
+
+
+  axios.get(apiUrl).then(handleResponse)
+ 
+}
+
+
 }
