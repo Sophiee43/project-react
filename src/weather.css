@@ -37,9 +37,10 @@
 .weather .temperature{
  font-weight: bold;
  color: rgb(33,33,33);
- font-size: 64px;
+ font-size: 50px;
  line-height: 64px;
  font-weight: 400;
+margin-left: 10px;
 }
 .weather .unit{
 color: rgb(33,33,33);
@@ -48,5 +49,4 @@ font-weight: 400;
 position: relative;
 line-height: 1;
 top: -34px;
-margin-left: 0px;
-}
+} 

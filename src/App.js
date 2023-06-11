@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <div className="container"> 
     <h1>Weather App</h1>
-    <Weather/>
+    <Weather defaultCity="Chicago"/>
       <footer>
         This project was coded by Sophie and is {""} 
       <a href="https://github.com/Sophiee43/project-react.git">Open-sourced on github </a>
