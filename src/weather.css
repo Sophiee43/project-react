@@ -31,6 +31,10 @@
 .weather canvas{
   margin: 10px auto
 }
+.clearfix{
+  display:flex;
+  align-items:center;
+}
 .weather .temperature{
  font-weight: bold;
  color: rgb(33,33,33);
