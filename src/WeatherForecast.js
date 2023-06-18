@@ -1,42 +1,51 @@
-import React,{useState} from "react"
-import "./WeatherForecast.css"
-import axios from "axios"
+import React, { useState, useEffect } from "react";
+import "./WeatherForecast.css";
+import axios from "axios";
 import WeatherForecastDay from "./WeatherForecastDay";
-export default function WeatherForecast(props){
-let [loaded,setLoaded]=useState(false);
-let [forecast,setForecast]=useState(null);
- function handleResponse(response){
-  setForecast(response.data.daily);
-  setLoaded(true);
- }
-   
-if (loaded){
 
-    return (
- <div className="WeatherForecast">
-<div className="row">
- <div className="col">
-  <WeatherForecastDay data={forecast[0]}/>
-  
- </div>
- 
-</div>
+export default function WeatherForecast(props) {
+  let [loaded, setLoaded] = useState(false);
+  let [forecast, setForecast] = useState(null);
 
- </div>
-)
+  useEffect(() => {
+    setLoaded(false);
+  }, [props.coordinates]);
 
-
-
-
+  function handleResponse(response) {
+    setForecast(response.data.daily);
+    setLoaded(true);
   }
-  else {
-    
- let apiKey = "6d4e209t0bec1099e3a83o8bfca32f2a";
+
+  function load() {
+    let apiKey = "3499ef150985eccadd080ff408a018df";
     let longitude = props.coordinates.lon;
-    let latitude= props.coordinates.lat;
+    let latitude = props.coordinates.lat;
     let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-axios.get(apiUrl).then (handleResponse);
+
+    axios.get(apiUrl).then(handleResponse);
   }
 
+  if (loaded) {
+    return (
+      <div className="WeatherForecast">
+        <div className="row">
+          {forecast.map(function (dailyForecast, index) {
+            if (index < 5) {
+              return (
+                <div className="col" key={index}>
+                  <WeatherForecastDay data={dailyForecast} />
+                </div>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </div>
+      </div>
+    );
+  } else {
+    load();
 
+    return null;
+  }
 }
